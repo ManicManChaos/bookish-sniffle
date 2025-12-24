@@ -213,69 +213,44 @@
     </details>
   </section>
 
-  <!-- ✅ Roid Boy Chronicles (Accordion - matches other sections) -->
-<details class="accordion" id="roidBoyAccordion">
-  <summary>
-    <span class="sumLeft">💪 Roid Boy Chronicles</span>
-    <span class="sumRight">log it if you trained</span>
+  <!-- 💪 Roid Boy Chronicles (accordion like the others) -->
+<details class="card acc" id="roidBoyAcc">
+  <summary class="accHead">
+    <span class="accLeft">💪 Roid Boy Chronicles</span>
+    <span class="accRight">log it if you trained</span>
   </summary>
 
   <div class="accBody">
     <div class="grid2">
       <div class="field">
-        <label for="rbArrive">Time arrived</label>
-        <select id="rbArrive">
-          <option value="">Select…</option>
-        </select>
+        <label for="gymArrive">Time arrived</label>
+        <select id="gymArrive"></select>
       </div>
 
       <div class="field">
-        <label for="rbDuration">Time spent</label>
-        <select id="rbDuration">
-          <option value="">Select…</option>
-          <option>30 min</option>
-          <option>45 min</option>
-          <option>60 min</option>
-          <option>75 min</option>
-          <option>90 min</option>
-          <option>105 min</option>
-          <option>120 min</option>
-          <option>150 min</option>
-          <option>180 min</option>
-        </select>
+        <label for="gymDuration">Time spent</label>
+        <select id="gymDuration"></select>
       </div>
 
       <div class="field">
-        <label for="rbWeight">Weight</label>
-        <select id="rbWeight">
-          <option value="">Select…</option>
-        </select>
+        <label for="gymWeight">Weight</label>
+        <select id="gymWeight"></select>
       </div>
 
       <div class="field">
-        <label for="rbBodyFat">Body fat %</label>
-        <select id="rbBodyFat">
-          <option value="">Select…</option>
-        </select>
+        <label for="gymBodyfat">Body fat %</label>
+        <select id="gymBodyfat"></select>
       </div>
     </div>
 
     <div class="field">
-      <label for="rbWorkout">Workouts / notes</label>
-      <textarea id="rbWorkout" rows="5" placeholder="What did we train? Sets, reps, PRs, cardio, vibes…"></textarea>
+      <label for="gymWorkouts">Workouts / notes</label>
+      <textarea id="gymWorkouts" rows="5" placeholder=""></textarea>
     </div>
 
-    <div class="grid2">
-      <div class="field">
-        <label for="rbPhoto">Workout photo (required if you trained)</label>
-        <input id="rbPhoto" type="file" accept="image/*" />
-      </div>
-
-      <div class="field">
-        <label for="rbCycleStart">6-week cycle (start date)</label>
-        <input id="rbCycleStart" type="date" />
-        <small class="muted" id="rbCycleCountdown">Set a start date to show time left.</small>
-      </div>
+    <div class="field">
+      <label for="gymPhoto">Workout photo</label>
+      <input id="gymPhoto" type="file" accept="image/*" />
     </div>
   </div>
 </details>
