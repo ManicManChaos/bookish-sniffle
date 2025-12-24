@@ -135,54 +135,72 @@
     </details>
   </section>
 
-  <!-- Roid Boy Chronicles (toggle + required photo) -->
-  <section class="card rb">
-    <div class="grid2" style="align-items:center">
-      <h2 style="margin:0"><span class="ico">💪</span>Roid Boy Chronicles</h2>
-      <div class="field" style="margin:0"><label><input id="rbToggle" type="checkbox" /> I trained today</label></div>
-    </div>
+  <!-- ✅ Roid Boy Chronicles (Accordion - matches other sections) -->
+<details class="accordion" id="roidBoyAccordion">
+  <summary>
+    <span class="sumLeft">💪 Roid Boy Chronicles</span>
+    <span class="sumRight">log it if you trained</span>
+  </summary>
 
-    <div id="rbPanel" hidden>
-      <div class="grid2">
-        <div class="field"><label>Arrived at gym</label><input id="rbArrive" type="time" step="60" /></div>
-        <div class="field">
-          <label>Time spent</label>
-          <select id="rbSpent">
-            <option value="">Select…</option>
-            <option value="30">30 min</option><option value="45">45 min</option><option value="60">60 min</option><option value="75">75 min</option>
-            <option value="90">90 min</option><option value="105">105 min</option><option value="120">120 min</option><option value="150">150 min</option>
-            <option value="180">180 min</option>
-          </select>
-        </div>
+  <div class="accBody">
+    <div class="grid2">
+      <div class="field">
+        <label for="rbArrive">Time arrived</label>
+        <select id="rbArrive">
+          <option value="">Select…</option>
+        </select>
       </div>
-
-      <div class="grid3">
-        <div class="field"><label>Weight (lbs)</label><input id="rbWeight" type="number" step="0.1" /></div>
-        <div class="field"><label>Body fat %</label><input id="rbBodyfat" type="number" step="0.1" min="0" max="100" /></div>
-
-        <div class="field">
-          <label>Workout photo (required)</label>
-          <input id="rbPhoto" type="file" accept="image/*" />
-          <div id="rbPreview" class="preview"></div>
-        </div>
-      </div>
-
-      <div class="field"><label>Workout details</label><textarea id="rbNotes" rows="6"></textarea></div>
 
       <div class="field">
-        <label>6-Week Program Countdown</label>
-        <div class="grid2">
-          <button class="btn gold" id="rbResetCycleBtn" type="button">Start / Reset</button>
-          <div class="muted" id="cycleLabel">Not started</div>
-        </div>
-        <div class="bar"><div id="cycleFill"></div></div>
-        <div class="grid2">
-          <div class="muted" id="cycleLeft">—</div>
-          <div class="muted" style="text-align:right">feeds Year in Review</div>
-        </div>
+        <label for="rbDuration">Time spent</label>
+        <select id="rbDuration">
+          <option value="">Select…</option>
+          <option>30 min</option>
+          <option>45 min</option>
+          <option>60 min</option>
+          <option>75 min</option>
+          <option>90 min</option>
+          <option>105 min</option>
+          <option>120 min</option>
+          <option>150 min</option>
+          <option>180 min</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="rbWeight">Weight</label>
+        <select id="rbWeight">
+          <option value="">Select…</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="rbBodyFat">Body fat %</label>
+        <select id="rbBodyFat">
+          <option value="">Select…</option>
+        </select>
       </div>
     </div>
-  </section>
+
+    <div class="field">
+      <label for="rbWorkout">Workouts / notes</label>
+      <textarea id="rbWorkout" rows="5" placeholder="What did we train? Sets, reps, PRs, cardio, vibes…"></textarea>
+    </div>
+
+    <div class="grid2">
+      <div class="field">
+        <label for="rbPhoto">Workout photo (required if you trained)</label>
+        <input id="rbPhoto" type="file" accept="image/*" />
+      </div>
+
+      <div class="field">
+        <label for="rbCycleStart">6-week cycle (start date)</label>
+        <input id="rbCycleStart" type="date" />
+        <small class="muted" id="rbCycleCountdown">Set a start date to show time left.</small>
+      </div>
+    </div>
+  </div>
+</details>
 
   <!-- Calendar (accordion) -->
   <section class="card">
