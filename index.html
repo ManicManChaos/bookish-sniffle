@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0b1b14" />
+
+  <title>Manic Musings of Chaos</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-180.png" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="cover">
+  <main class="coverWrap" aria-label="Cover">
+    <div class="sigil" role="img" aria-label="Manic Musings of Chaos sigil">
+      <img src="cover-emerald.png" alt="Emerald sigil with gold E" />
+      <div class="sigilTitle">MANIC MUSINGS<br/>OF CHAOS</div>
+    </div>
+
+    <button class="enterBtn" id="enterBtn" type="button">
+      <span>Enter, Eugene…</span>
+      <span class="enterSub">tell no lies</span>
+      <div class="spellBurst" aria-hidden="true"><span>✦ ✧ ✦</span><span>✧</span><span>✦</span></div>
+    </button>
+
+    <div class="coverFade" aria-hidden="true"></div>
+  </main>
+
+  <script>
+    const v = Date.now();
+
+    // keep SW but bump cache by query so Netlify stops serving older builds
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js?v=' + v).catch(() => {});
+    }
+
+    function sparkleBurst(x, y) {
+      for (let i = 0; i < 12; i++) {
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        s.style.left = (x + (Math.random() * 160 - 80)) + 'px';
+        s.style.top  = (y + (Math.random() * 120 - 60)) + 'px';
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 750);
+      }
+    }
+
+    const btn = document.getElementById('enterBtn');
+    btn.addEventListener('click', (e) => {
+      const r = e.currentTarget.getBoundingClientRect();
+      sparkleBurst(r.left + r.width / 2, r.top + r.height / 2);
+      btn.classList.remove('cast');
+      void btn.offsetWidth;
+      btn.classList.add('cast');
+      setTimeout(()=>{ location.href = 'app.html?v=' + v; }, 520);
+    });
+  </script>
+</body>
+</html>

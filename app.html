@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Today • Manic Musings of Chaos</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="app">
+<header class="topbar">
+  <a class="brand" href="index.html">Manic Musings of Chaos</a>
+  <nav class="nav">
+    <a class="navlink" href="library.html">Library</a>
+    <a class="navlink" href="review.html">Year in Review</a>
+    <button class="navbtn" id="resetTodayBtn" type="button">Reset Today</button>
+  </nav>
+</header>
+
+<main class="container">
+
+  <!-- Today (always open) -->
+  <section class="card">
+    <h2><span class="ico">📜</span>Today</h2>
+
+    <div class="grid2">
+      <div class="field"><label>Title</label><input id="title" placeholder="Give today a name…" /></div>
+      <div class="field"><label>Day</label><input id="day" placeholder="Saturday / etc" /></div>
+    </div>
+
+    <div class="grid2">
+      <div class="field"><label>Date</label><input id="date" type="date" /></div>
+      <div class="field"><label>Location</label><input id="location" placeholder="Where are you?" /></div>
+    </div>
+
+    <div class="grid2">
+      <div class="field"><label>Word of the day</label><input id="word" placeholder="One word that hits…" /></div>
+
+      <div class="field">
+        <label>Chakra Alignment</label>
+        <select id="chakra">
+          <option value="">Select…</option>
+          <option value="Root">🔴 Root</option>
+          <option value="Sacral">🟠 Sacral</option>
+          <option value="Solar Plexus">🟡 Solar Plexus</option>
+          <option value="Heart">🟢 Heart</option>
+          <option value="Throat">🔵 Throat</option>
+          <option value="Third Eye">🟣 Third Eye</option>
+          <option value="Crown">⚪ Crown</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="field">
+        <label>Mood</label>
+        <select id="mood">
+          <option value="">Select…</option>
+          <option>Unbothered but dangerous</option>
+          <option>Villain era loading</option>
+          <option>Soft but feral</option>
+          <option>Main character, obviously</option>
+          <option>Pretty & petty</option>
+          <option>Chaotic good…ish</option>
+          <option>Horny + holy</option>
+          <option>Unhinged but hot</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Month Chapter Title (Era)</label>
+        <select id="era">
+          <option value="">(optional)</option>
+          <option>Villain Era</option>
+          <option>Love Wins</option>
+          <option>Whore4More</option>
+          <option>Main Character Season</option>
+          <option>Soft Chaos</option>
+          <option>Healing Arc</option>
+          <option>Reinvention</option>
+          <option>NYC Energy</option>
+          <option>Becoming</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- Moments (accordion, starts closed) -->
+  <section class="card">
+    <details class="accordion">
+      <summary><span><span class="ico">🎭</span>See what had happened was…</span><span class="muted">WOW / WTF / PLOT TWIST</span></summary>
+      <div class="acc-body">
+        <div class="momentRow">
+          <div class="field"><label>Time</label><input id="m1t" type="time" step="60" /></div>
+          <div class="field"><label>Type</label>
+            <select id="m1type"><option value="">Select…</option><option value="WOW">WOW</option><option value="WTF">WTF</option><option value="PLOT TWIST">PLOT TWIST</option></select>
+          </div>
+          <div class="field grow"><label>Moment</label><input id="m1" placeholder="What happened?" /></div>
+        </div>
+        <div class="momentRow">
+          <div class="field"><label>Time</label><input id="m2t" type="time" step="60" /></div>
+          <div class="field"><label>Type</label>
+            <select id="m2type"><option value="">Select…</option><option value="WOW">WOW</option><option value="WTF">WTF</option><option value="PLOT TWIST">PLOT TWIST</option></select>
+          </div>
+          <div class="field grow"><label>Moment</label><input id="m2" placeholder="What happened?" /></div>
+        </div>
+        <div class="momentRow">
+          <div class="field"><label>Time</label><input id="m3t" type="time" step="60" /></div>
+          <div class="field"><label>Type</label>
+            <select id="m3type"><option value="">Select…</option><option value="WOW">WOW</option><option value="WTF">WTF</option><option value="PLOT TWIST">PLOT TWIST</option></select>
+          </div>
+          <div class="field grow"><label>Moment</label><input id="m3" placeholder="What happened?" /></div>
+        </div>
+        <div class="momentRow">
+          <div class="field"><label>Time</label><input id="m4t" type="time" step="60" /></div>
+          <div class="field"><label>Type</label>
+            <select id="m4type"><option value="">Select…</option><option value="WOW">WOW</option><option value="WTF">WTF</option><option value="PLOT TWIST">PLOT TWIST</option></select>
+          </div>
+          <div class="field grow"><label>Moment</label><input id="m4" placeholder="What happened?" /></div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- Tasks (accordion) -->
+  <section class="card">
+    <details class="accordion">
+      <summary><span><span class="ico">✅</span>Need-to-do → Been-done-dids</span><span class="muted">from “need” to “been done did”</span></summary>
+      <div class="acc-body">
+        <div class="grid2">
+          <div class="field"><label>Todo</label><textarea id="todo" rows="6"></textarea></div>
+          <div class="field"><label>Completed</label><textarea id="done" rows="6"></textarea></div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- Roid Boy Chronicles (toggle + required photo) -->
+  <section class="card rb">
+    <div class="grid2" style="align-items:center">
+      <h2 style="margin:0"><span class="ico">💪</span>Roid Boy Chronicles</h2>
+      <div class="field" style="margin:0"><label><input id="rbToggle" type="checkbox" /> I trained today</label></div>
+    </div>
+
+    <div id="rbPanel" hidden>
+      <div class="grid2">
+        <div class="field"><label>Arrived at gym</label><input id="rbArrive" type="time" step="60" /></div>
+        <div class="field">
+          <label>Time spent</label>
+          <select id="rbSpent">
+            <option value="">Select…</option>
+            <option value="30">30 min</option><option value="45">45 min</option><option value="60">60 min</option><option value="75">75 min</option>
+            <option value="90">90 min</option><option value="105">105 min</option><option value="120">120 min</option><option value="150">150 min</option>
+            <option value="180">180 min</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="field"><label>Weight (lbs)</label><input id="rbWeight" type="number" step="0.1" /></div>
+        <div class="field"><label>Body fat %</label><input id="rbBodyfat" type="number" step="0.1" min="0" max="100" /></div>
+
+        <div class="field">
+          <label>Workout photo (required)</label>
+          <input id="rbPhoto" type="file" accept="image/*" />
+          <div id="rbPreview" class="preview"></div>
+        </div>
+      </div>
+
+      <div class="field"><label>Workout details</label><textarea id="rbNotes" rows="6"></textarea></div>
+
+      <div class="field">
+        <label>6-Week Program Countdown</label>
+        <div class="grid2">
+          <button class="btn gold" id="rbResetCycleBtn" type="button">Start / Reset</button>
+          <div class="muted" id="cycleLabel">Not started</div>
+        </div>
+        <div class="bar"><div id="cycleFill"></div></div>
+        <div class="grid2">
+          <div class="muted" id="cycleLeft">—</div>
+          <div class="muted" style="text-align:right">feeds Year in Review</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendar (accordion) -->
+  <section class="card">
+    <details class="accordion">
+      <summary><span><span class="ico">🗓️</span>Calendar Shenanigans</span><span class="muted">two updates if you need them</span></summary>
+      <div class="acc-body">
+        <div class="grid2">
+          <div class="field"><label>Update 1 time</label><input id="c1t" type="time" step="60" /></div>
+          <div class="field"><label>Update 1</label><div class="inlineInput"><input id="c1" /><button class="miniBtn" id="c1Outlook" type="button" title="Add to Outlook">Outlook</button></div></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><label>Update 2 time</label><input id="c2t" type="time" step="60" /></div>
+          <div class="field"><label>Update 2</label><div class="inlineInput"><input id="c2" /><button class="miniBtn" id="c2Outlook" type="button" title="Add to Outlook">Outlook</button></div></div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- Receipts / Photos (accordion) -->
+  <section class="card">
+    <details class="accordion">
+      <summary><span><span class="ico">🧾</span>Receipts</span><span class="muted">images that belong to the day</span></summary>
+      <div class="acc-body">
+        <div class="field">
+          <label>Photos (optional)</label>
+          <input id="photos" type="file" accept="image/*" multiple />
+          <div id="photoPreview" class="preview"></div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- Confession (accordion, writer-space feel) -->
+  <section class="card">
+    <details class="accordion">
+      <summary><span><span class="ico">✒️</span>So here’s the thing…</span><span class="muted">writer space</span></summary>
+      <div class="acc-body">
+        <div class="field"><label>Write it out</label><textarea id="confession" rows="10"></textarea></div>
+      </div>
+    </details>
+  </section>
+
+  <section class="actions">
+    <button class="btn primary" id="saveBtn" type="button">Save Entry</button>
+    <div id="saveMsg" class="muted"></div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta name="theme-color" content="#0b1b14"/>
+  <title>Library – Manic Musings of Chaos</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    body.library { background: radial-gradient(1200px 800px at 20% 10%, rgba(214,78,160,.18), transparent 55%),
+                   radial-gradient(1200px 800px at 80% 20%, rgba(86,176,120,.16), transparent 60%),
+                   linear-gradient(180deg, var(--bg2), var(--bg1));
+    }
+    .libWrap { max-width: 980px; margin: 0 auto; padding: 18px; }
+    .libHeader { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    .libHeader h1 { margin: 10px 0; font-size: 22px; letter-spacing:.03em; }
+    .libNav a { text-decoration:none; color:inherit; opacity:.9; padding:8px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.14); }
+    .monthCard { margin-top: 16px; }
+    .monthTitle { margin: 0 0 10px; opacity:.9; letter-spacing:.04em; font-size: 14px; text-transform: uppercase; }
+    .entryRow { display:flex; gap:10px; align-items:center; justify-content:space-between; padding:12px; border-radius: 14px; border:1px solid rgba(255,255,255,.10); background: rgba(0,0,0,.18); }
+    .entryRow + .entryRow { margin-top: 10px; }
+    .entryMeta { display:flex; flex-direction:column; gap:2px; min-width:0; }
+    .entryTitle { font-weight: 900; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .entrySub { opacity:.75; font-size: 12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .entryActions { display:flex; gap:8px; }
+    .btnSmall { padding:8px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.18); color: var(--text); font-weight:800; cursor:pointer; }
+    .btnSmall.danger { border-color: rgba(255,120,120,.35); }
+    .emptyCard { padding: 16px; border-radius: 16px; border:1px solid rgba(255,255,255,.10); background: rgba(0,0,0,.14); opacity:.9; }
+  </style>
+</head>
+<body class="app library">
+  <div class="topbar">
+    <div class="brand">Manic Musings of Chaos</div>
+    <div class="nav">
+      <a class="navlink" href="app.html">Back</a>
+      <a class="navlink" href="review.html">Year in Review</a>
+      <a class="navlink" href="index.html">Cover</a>
+    </div>
+  </div>
+
+  <div class="libWrap">
+    <div class="card">
+      <h2>Your Book</h2>
+      <p class="muted" id="libHint">Loading…</p>
+      <div id="libMount"></div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "mmoc_entries_v3";
+
+    const monthKey = (iso) => {
+      const d = new Date((iso||"") + "T00:00:00");
+      if (isNaN(d)) return "Unknown";
+      const y = d.getFullYear();
+      const m = d.toLocaleDateString(undefined, { month: "long" });
+      return `${y} — ${m}`;
+    };
+
+    const eraLabel = (iso) => {
+      const d = new Date((iso||"") + "T00:00:00");
+      if (isNaN(d)) return "";
+      const y = d.getFullYear();
+      const m = d.getMonth(); // 0-11
+      const season = (m<=1 || m===11) ? "Winter" : (m<=4) ? "Spring" : (m<=7) ? "Summer" : "Autumn";
+      return `${season} Era • ${y}`;
+    };
+
+    const human = (iso) => {
+      try {
+        return new Date(iso + "T00:00:00").toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" });
+      } catch { return iso; }
+    };
+
+    const readEntries = () => {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const arr = raw ? JSON.parse(raw) : [];
+        return Array.isArray(arr) ? arr : [];
+      } catch { return []; }
+    };
+
+    const writeEntries = (arr) => localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+
+    const delEntry = (dateISO) => {
+      const entries = readEntries().filter(e => e && e.date !== dateISO);
+      writeEntries(entries);
+      render();
+    };
+
+    const render = () => {
+      const mount = document.getElementById("libMount");
+      const hint = document.getElementById("libHint");
+      const entries = readEntries().filter(e => e && e.date);
+
+      if (!entries.length) {
+        hint.textContent = "No entries yet — go write your first page.";
+        mount.innerHTML = `<div class="emptyCard">Tap <b>Back</b>, fill in Today, and your day will appear here automatically.</div>`;
+        return;
+      }
+
+      hint.textContent = "Tap an entry to open it. Delete removes that day only.";
+      // newest first
+      entries.sort((a,b)=> (b.date||"").localeCompare(a.date||""));
+
+      // group by month
+      const groups = {};
+      entries.forEach(e => {
+        const k = monthKey(e.date);
+        (groups[k] ||= []).push(e);
+      });
+
+      const monthOrder = Object.keys(groups).sort((a,b)=> b.localeCompare(a));
+
+      mount.innerHTML = monthOrder.map(mk => {
+        const era = eraLabel(groups[mk][0].date);
+        const rows = groups[mk].map(e => {
+          const title = (e.title && e.title.trim()) ? e.title.trim() : "Untitled day";
+          const chips = [e.day, e.mood, e.chakra].filter(Boolean).join(" • ");
+          const sub = `${human(e.date)}${chips ? " • " + chips : ""}`;
+          return `
+            <div class="entryRow">
+              <div class="entryMeta">
+                <div class="entryTitle">${title}</div>
+                <div class="entrySub">${era} • ${sub}</div>
+              </div>
+              <div class="entryActions">
+                <button class="btnSmall" data-open="${e.date}">Open</button>
+                <button class="btnSmall danger" data-del="${e.date}">Delete</button>
+              </div>
+            </div>
+          `;
+        }).join("");
+        return `
+          <div class="monthCard">
+            <div class="monthTitle">${mk}</div>
+            ${rows}
+          </div>
+        `;
+      }).join("");
+
+      mount.querySelectorAll("[data-open]").forEach(btn=>{
+        btn.addEventListener("click", () => {
+          const d = btn.getAttribute("data-open");
+          location.href = "app.html?date=" + encodeURIComponent(d);
+        });
+      });
+      mount.querySelectorAll("[data-del]").forEach(btn=>{
+        btn.addEventListener("click", () => {
+          const d = btn.getAttribute("data-del");
+          const title = btn.closest(".entryRow")?.querySelector(".entryTitle")?.textContent || d;
+          if (confirm(`Delete "${title}"?\n\nThis removes only that day from your Library.`)) delEntry(d);
+        });
+      });
+    };
+
+    document.addEventListener("DOMContentLoaded", render);
+  </script>
+</body>
+</html>
